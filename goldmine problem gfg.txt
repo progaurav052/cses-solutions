@@ -1,0 +1,101 @@
+class Solution{
+public:
+/*
+     int solve(vector<vector<int>>M,int n,int m,int i,int j,vector<vector<int>>&dp)
+     {
+         
+       //what is the base case
+       if(i<0||i>=n)
+       {
+           return 0;
+           
+       }
+       if(j==m-1)
+       {
+           return M[i][j];
+           
+       }
+       if(dp[i][j]!=-1)
+       {
+           return dp[i][j];
+           
+       }
+       //at evry cell we have two choices either go right,up-right,down-right
+       
+       int upright=M[i][j]+solve(M,n,m,i-1,j+1,dp);
+       int right=M[i][j]+solve(M,n,m,i,j+1,dp);
+       int downright=M[i][j]+solve(M,n,m,i+1,j+1,dp);
+       
+       return dp[i][j]=max(upright,max(right,downright));
+       
+         
+     }
+     */
+     
+    int maxGold(int n, int m, vector<vector<int>> M)
+    {
+        // code here
+        //use recursion
+        /*
+        vector<vector<int>>dp(n,vector<int>(m,-1));
+        
+        int res=0;
+        for(int i=0;i<n;i++)
+        {
+            res=max(res,solve(M,n,m,i,0,dp));
+            
+        }
+        return res;
+        */
+        
+        vector<vector<int>>t(n,vector<int>(m,0));
+        
+        for(int i=0;i<n;i++)
+        {
+            t[i][m-1]=M[i][m-1];
+            
+        }
+        
+        for(int j=m-2;j>=0;j--)
+        {
+            for(int i=0;i<n;i++)
+            {
+                int upleft=0;
+                int right=0;
+                int downright=0;
+                
+                if(i>0)
+                {
+                    upleft=M[i][j]+t[i-1][j+1];
+                    
+                }
+                if(i<n-1)
+                {
+                    downright=M[i][j]+t[i+1][j+1];
+                    
+                    
+                }
+                
+                right=M[i][j]+t[i][j+1];
+                
+                t[i][j]=max(upleft,max(right,downright));
+                
+
+            }
+        }
+        int res=0;
+        
+        for(int i=0;i<n;i++)
+        {
+            res=max(res,t[i][0]);
+            
+        }
+        return res;
+        
+        
+        
+        
+        
+        
+    }
+};
